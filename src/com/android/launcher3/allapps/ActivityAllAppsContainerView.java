@@ -34,6 +34,7 @@ import com.android.launcher3.allapps.BaseAllAppsAdapter.AdapterItem;
 import com.android.launcher3.allapps.search.SearchAdapterProvider;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.views.AppLauncher;
+import com.android.launcher3.util.Themes;
 
 import java.util.ArrayList;
 
@@ -160,7 +161,14 @@ public class ActivityAllAppsContainerView<T extends Context & AppLauncher
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mSearchContainer = findViewById(R.id.search_container_all_apps);
+        mSearchContainer = findViewById(R.id.search_container_all_apps);        
+
+        if (!Themes.isThemedIconEnabled(getContext())) {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
+        } else {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
+        }
+        
         mSearchUiManager = (SearchUiManager) mSearchContainer;
         mSearchUiManager.initializeSearch(this);
     }
@@ -246,7 +254,11 @@ public class ActivityAllAppsContainerView<T extends Context & AppLauncher
     @Override
     protected void updateHeaderScroll(int scrolledOffset) {
         super.updateHeaderScroll(scrolledOffset);
-        getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox);
+        if (!Themes.isThemedIconEnabled(getContext())) {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google);
+        } else {
+          getSearchView().setBackgroundResource(R.drawable.bg_all_apps_searchbox_google_themed);
+        }
         if (mSearchUiManager.getEditText() == null) {
             return;
         }
@@ -259,13 +271,6 @@ public class ActivityAllAppsContainerView<T extends Context & AppLauncher
             bgVisible = false;
         }
         mSearchUiManager.setBackgroundVisibility(bgVisible, 1 - prog);
-    }
-
-    @Override
-    protected int getHeaderColor(float blendRatio) {
-        return ColorUtils.setAlphaComponent(
-                super.getHeaderColor(blendRatio),
-                (int) (mSearchContainer.getAlpha() * 255));
     }
 
     @Override

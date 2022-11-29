@@ -64,7 +64,7 @@
     <string name="label_voice_search">Voice search</string>
     <string name="dock_search_title">Google search bar</string>
     <string name="dock_search_summary">Show search bar in the bottom dock</string>
-    <string name="qsb_search_hint" translatable="false">Searching for something?</string>
+    <string name="qsb_search_hint" translatable="false">Search your phone and more</string>
 
     <!-- Smartspace -->
     <string name="smartspace_pref_title">At a Glance</string>
